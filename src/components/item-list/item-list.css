@@ -2,12 +2,12 @@
  .person {
   width: 30%;
   height: 40%;
-  
+
 }
 
 .margin{       /*отступ для товаров   */
   margin:100px;
- 
+
 }
 .padding{           /*верхний отступ между товаров   */
   padding-top:20px
@@ -17,6 +17,10 @@
 .testtest{
   width: 18rem;
 }
+
+ img{
+     cursor: pointer;
+ }
 
 
 

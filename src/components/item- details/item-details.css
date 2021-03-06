@@ -2,24 +2,39 @@
  .person {
   width: 30%;
   height: 40%;
-  
+
 }
 
 .margin{       /*отступ для товаров   */
   margin-left:30%;
- 
+
 }
 .padding{           /*верхний отступ между товаров   */
   padding-top:20px
 }
 
 
-.testtest{
-  width: 18rem;
+.test{
+
+    margin-top:100px
+
+}
+
+ .test2{
+     background-color: aquamarine;
+
+ }
+
+ .test3{
+     background-color: coral;
+
+ }
+
+img{
+    border:none;
 }
 
 
-
-.outer {   /*центровка спинера по вертикали и горизонтали */
+ .outer {   /*центровка спинера по вертикали и горизонтали */
   text-align: center;
  }

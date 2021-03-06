@@ -22,7 +22,7 @@ export default class ItemList extends Component {
     })
     const { category } = this.props;
     const { find } = this.props;
-    console.log(find)
+
     this.dummyApiService
       .getAllData()
       .then((data) => {
@@ -52,9 +52,9 @@ export default class ItemList extends Component {
     this.updateProduct()
   }
   componentDidUpdate(prevProps) {
-    console.log(prevProps)
+
     if (this.props != prevProps) {
-      console.log(prevProps)
+
       this.updateProduct()
     }
 
@@ -62,6 +62,7 @@ export default class ItemList extends Component {
   }
 
   renderItems(arr) {
+
     return arr.map(({ name, description, price, key, src }) => {
       return (
         <div onClick = {()=>console.log(name)} key={key} className="col-lg-3 col-md-6">

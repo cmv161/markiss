@@ -10,9 +10,9 @@ return(
     ALARM ERROR
     </h2>
 </div>
-)
+);
 
-}
+};
 
 
 export default ErrorIndicator;
