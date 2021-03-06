@@ -1,6 +1,7 @@
 import React from 'react';
 import SearchBox from '../search-box';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
+import icon from './mark.png';
 
 import './header.css';
 
@@ -13,10 +14,10 @@ const Header = ({productSwitch, searchProduct}) => {
 
 
 
-    <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-white">
       <div className="container">
         <Link  to = "/" className="navbar-brand">MarKissMarket</Link>
-        <img src="mark.png" alt="logo" width="40" height="40" />
+        <img src={icon} alt="logo" width="40" height="40" />
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
           aria-controls="navbarContent" aria-expanded="false">
           <span className="navbar-toggler-icon"></span>
@@ -35,12 +36,17 @@ const Header = ({productSwitch, searchProduct}) => {
           </ul>
           <form action="" className="d-flex">
             <input type="search" placeholder="Поиск" className="form-control mr2"  onChange={(event)=>searchProduct(event.target.value)}></input>
-            <button className="btn btn-outline-success searc-button">Корзина</button>
+            <button className="btn btn-outline-success searc-button ml-5">Корзина</button>
+
+              <div  className="text-nowrap bd-highlight pl-3 pt-1 font-weight-bold">14 799 ₽</div >
+
+
+
           </form>
         </div>
       </div>
     </nav>
-  )
-}
+  );
+};
 
 export default Header;
