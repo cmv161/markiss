@@ -5,8 +5,8 @@
 
 }
 
-.margin{       /*отступ для товаров   */
-  margin:100px;
+.marginTopList{       /*отступ для товаров   */
+  margin-top:100px;
 
 }
 .padding{           /*верхний отступ между товаров   */
@@ -14,12 +14,23 @@
 }
 
 
-.testtest{
-  width: 18rem;
+.columnLeft{ /*прижатие колонки к левому краю, содержимое правой колонки обтекает левую   */
+    float:left;
+    width:300px;
 }
+
+ .imageListSize{
+     height: 400px;
+     width:300px;
+
+ }
 
  img{
      cursor: pointer;
+ }
+
+ .contentProductList{     /*отступ от менюшки до товаров */
+     margin-left: 25rem;
  }
 
 
