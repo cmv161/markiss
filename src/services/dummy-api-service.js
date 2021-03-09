@@ -180,12 +180,43 @@ export default class DummyApiService {
           "стабильный. В этой ценовой категории, пожалуй, самый достойный корм для кошек. "
       }]
     },
+    {
+      name: 'Purina Pro Plan',
+      description: 'Для взрослых собак средних пород, с курицей и рисом',
+      price: '3930',
+      key: 6,
+      category:'feed',
+      src: "https://cdn1.ozone.ru/s3/multimedia-5/wc250/6016911833.jpg" ,
+      src2: "https://cdn1.ozone.ru/s3/multimedia-1/c250/6005117905.jpg" ,
+      src3: "https://cdn1.ozone.ru/multimedia/c250/1021701524.jpg" ,
+      descriptionFool: "Корм сухой Pro Plan \"Junior Delicate\", для котят с чувствительным" +
+        " пищеварением - корм с высоким содержанием белка, сочетающий все необходимые питательные" +
+        " вещества, включая витамины С и Д3, а также омега-3жирную кислоту. Легко усвояемый корм " +
+        "для котят с чувствительным пищеварением.",
+
+      properties:{
+        type: "Корм сухой",
+        designedFor:"Для собак",
+        taste:"Индейка"
+      },
+
+      review:[{
+        number:"1",
+        dignity:"Цена дешевле чем в магазине. Котёнку 2,5 мес. Сфинкс. Ест отлично. Пробовали " +
+          "размачивать в воде.",
+        limitations:"Не заметила ",
+        comment:"Котику очень нравится. После его употребления у котёнка нет запаха изо рта, стул " +
+          "стабильный. В этой ценовой категории, пожалуй, самый достойный корм для кошек. "
+      }]
+    },
+
+
 
     {
       name: 'Vitrum Zoo MAX',
       description: 'Для взрослых собак крупных пород, 300 шт.',
       price: '2500',
-      key: 6,
+      key: 66,
       category:'vitamins',
       src: "https://cdn1.ozone.ru/multimedia/wc250/1013384805.jpg" ,
       src2: "https://cdn1.ozone.ru/s3/multimedia-1/c250/6005117905.jpg" ,

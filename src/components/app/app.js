@@ -30,7 +30,9 @@ const data =  storeService.getItem()
   };
 
   productSwitch = (event) => {
+    console.log(event)
     this.setState({ category: event });
+    this.render()
   };
 
   searchProduct = (event) => {
