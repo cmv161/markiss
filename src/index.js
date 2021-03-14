@@ -14,11 +14,11 @@ ReactDOM.render(
     <ErrorBoundry>
       <StoreServiceProvider value={storeService}>
         <Router>
-          <App />
+          <App/>
         </Router>
       </StoreServiceProvider>
     </ErrorBoundry>
- </Provider>
+  </Provider>
 
   ,
   document.getElementById('root'));

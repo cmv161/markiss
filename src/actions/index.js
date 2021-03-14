@@ -1,8 +1,22 @@
-const itemLoaded = (newItem) => {
+const shoppingCartPushRedux = (shoppingCart) => {
   return {
-    type: 'ITEM_LOADED',
-    payload: newItem
+    type: 'SHOPPING_CART',
+    payload: shoppingCart
   };
 };
-export default itemLoaded
+
+const shoppingCartDeleteRedux = (shoppingCart) => {
+  return {
+    type: 'DEL_ITEM_SHOPPING_CART',
+    payload: shoppingCart
+  };
+};
+const shoppingCartAllDeleteRedux = (shoppingCart) => {
+  return {
+    type: 'ALL-DEL_ITEM_SHOPPING_CART',
+    payload: shoppingCart
+  };
+};
+
+export { shoppingCartPushRedux, shoppingCartDeleteRedux, shoppingCartAllDeleteRedux };
 

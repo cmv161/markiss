@@ -1,6 +1,5 @@
 import React from 'react';
-import {StoreServiceConsumer} from '../store-service-context';
-
+import { StoreServiceConsumer } from '../store-service-context';
 
 const withStoreService = () => (Wrapped) => {
   return (props) => {
@@ -16,6 +15,5 @@ const withStoreService = () => (Wrapped) => {
     );
   };
 };
-
 
 export default withStoreService;

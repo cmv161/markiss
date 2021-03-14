@@ -6,8 +6,6 @@ import Footer from './footer';
 import ErrorIndicator from '../error-indicator';
 import Spinner from '../spinner';
 
-const dummyApiService = new DummyApiService();
-
 export default class ItemDetails extends Component {
 
   state = {
@@ -23,11 +21,10 @@ export default class ItemDetails extends Component {
       loading: true
     });
     const { id } = this.props;
-
     this.dummyApiService
       .getAllData()
       .then((data) => {
-        const newData = data.filter(item => item.key == id);
+        const newData = data.filter(item => item.key === id);
         this.setState({
           data: newData,
           loading: false
@@ -50,9 +47,8 @@ export default class ItemDetails extends Component {
 
   componentDidUpdate(prevProps) {
 
-    if (this.props != prevProps) {
-      console.log(prevProps);
-      // this.updateProduct();
+    if (this.props !== prevProps) {
+
     }
 
   }
@@ -71,7 +67,7 @@ export default class ItemDetails extends Component {
       review
     }) => {
       return (
-        <div key={key}className="container test ">
+        <div key={key} className="container test ">
           <div className="row">
             <h3>{name}</h3>
           </div>
@@ -79,8 +75,9 @@ export default class ItemDetails extends Component {
             <p> Код товара: {key}</p>
           </div>
 
-          <Center price={price} src={src} src2={src2} src3={src3}/>
-          <Footer name={name} description={description} descriptionFool={descriptionFool} properties={properties} review={review}/>
+          <Center keyItem={key} price={price} src={src} src2={src2} src3={src3} arr={arr}/>
+          <Footer name={name} description={description} descriptionFool={descriptionFool}
+                  properties={properties} review={review}/>
         </div>
       );
 

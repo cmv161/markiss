@@ -1,46 +1,39 @@
-import React, { Component }  from 'react';
+import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import Header from '../header';
+import ShoppingCart from '../shopping-cart';
 import ItemList from '../item-list';
 import ItemDetails from '../item- details';
 import Slider from '../slider';
-import {withStoreService} from '../hoc'
-import { ReactReduxContext } from 'react-redux'
-import {connect} from 'react-redux'
-
-
-import itemLoaded from '../../actions'
-
+import { withStoreService } from '../hoc';
+// import { ReactReduxContext } from 'react-redux'
+import { connect } from 'react-redux';
 
 class App extends Component {
-
-  componentDidMount() {
-    // для записи в стор нужно получить данные и передать действия в сторе
-    // чтобы получить данные нужно вызвать метод из сервиса а сервис можем получить из контекста при
-    // помощи компонента высшего порядка withStoreService
-    // -что бы у компонента Апп появился доступ к сервису его нужно обернуть в withStoreService
-const {storeService}= this.props
-const data =  storeService.getItem()
-    this.props.itemLoaded(data)
-  }
 
   state = {
     category: null,
     find: '',
   };
 
+  componentDidMount() {
+    // для записи в стор нужно получить данные и передать действия в сторе
+    // чтобы получить данные нужно вызвать метод из сервиса а сервис можем получить из контекста при
+    // помощи компонента высшего порядка withStoreService
+    // -что бы у компонента Апп появился доступ к сервису его нужно обернуть в withStoreService
+  }
+
   productSwitch = (event) => {
-    console.log(event)
     this.setState({ category: event });
-    this.render()
+    this.render();
   };
 
   searchProduct = (event) => {
+
     this.setState({ find: event });
   };
 
   render() {
-    const {shoppingCart}=this.props
 
     const {
       category,
@@ -48,31 +41,25 @@ const data =  storeService.getItem()
     } = this.state;
     return (
       <div>
-             <Header productSwitch={(event) => this.productSwitch(event)}
+        <Header productSwitch={(event) => this.productSwitch(event)}
                 searchProduct={(event) => this.searchProduct(event)}/>
         <Route path="/" component={Slider} exact/>
-        <Route path="/product" exact ><ItemList category={category} find={find}/></Route>
+        <Route path="/product" exact><ItemList category={category} find={find}/></Route>
         <Route path="/product/:id"
-               render={({match})=>{
-                 const {id}= match.params
+               render={({ match }) => {
+                 const { id } = match.params;
 
-                 return <ItemDetails id={id}/>
+                 return <ItemDetails id={+id}/>;
                }}/>
-
-        {/* <Slider />  */}
-        {/* <Spinner /> */}
-        {/* <ItemList  category={category} find={find}/> */}
+        <Route path="/shoppingcart" exact><ShoppingCart/></Route>
 
       </div>);
   }
-
 }
 
 // говорит что в компонент нужно передать свойство shoppingCart который берется из state.shoppingCart относится к connect
-const mapStateToProps=({shoppingCart})=>{
-
-
-  return {shoppingCart}
+const mapStateToProps = ({ shoppingCart }) => {
+  return { shoppingCart };
 };
 
 // обычная функция которая принимает dispatch и возвращает объект где ключи это свойства пропс которые
@@ -87,11 +74,11 @@ const mapStateToProps=({shoppingCart})=>{
 //   itemLoaded
 // }, dispatch)
 
-const mapDispathToProps={
-  itemLoaded
-}
+// const mapDispathToProps={
 
-export default  withStoreService()(
-  connect(mapStateToProps, mapDispathToProps)(App))
+// }
 
+export default withStoreService()(
+  connect(mapStateToProps)(App));
+// mapDispathToProps
 // connect используется для получения стор в компоненте апп

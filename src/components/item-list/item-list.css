@@ -1,37 +1,42 @@
 
- .person {
-  width: 30%;
-  height: 40%;
+.person {
+    width: 30%;
+    height: 40%;
 
 }
 
-.marginTopList{       /*отступ для товаров   */
-  margin-top:100px;
+.marginTopList { /*отступ для товаров   */
+    margin-top: 100px;
 
 }
-.padding{           /*верхний отступ между товаров   */
-  padding-top:20px
+
+.padding { /*верхний отступ между товаров   */
+    padding-top: 20px
 }
 
 
-.columnLeft{ /*прижатие колонки к левому краю, содержимое правой колонки обтекает левую   */
-    float:left;
-    width:300px;
+.columnLeft { /*прижатие колонки к левому краю, содержимое правой колонки обтекает левую   */
+    float: left;
+    width: 300px;
 }
 
- .imageListSize{
-     height: 400px;
-     width:300px;
+.imageListSize {
+    height: 400px;
+    width: 300px;
 
- }
+}
 
- img{
-     cursor: pointer;
- }
+img {
+    cursor: pointer;
+}
 
- .contentProductList{     /*отступ от менюшки до товаров */
-     margin-left: 25rem;
- }
+.contentProductList { /*отступ от менюшки до товаров */
+    margin-left: 25rem;
+}
+
+.cursorpointer {
+    cursor: pointer
+}
 
 
 
