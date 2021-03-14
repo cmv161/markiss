@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 export default class Footer extends Component {
 
-
   state = {
     filter: 'descriptionFool'
   };
@@ -29,18 +28,14 @@ export default class Footer extends Component {
 
   render() {
 
-let productCard
-
+    let productCard;
     const { filter } = this.state;
-
     const {
       name,
-      number,
       descriptionFool,
       properties,
       review
     } = this.props;
-
 
     const propertiesList = (
       <React.Fragment>
@@ -56,11 +51,11 @@ let productCard
         </div>
       </React.Fragment>
     );
-    const descriptionFoolList=(
+    const descriptionFoolList = (
       <p className="text-md-left p-4"> {descriptionFool}</p>
-    )
+    );
 
-    const reviewList=review.map(({
+    const reviewList = review.map(({
       dignity,
       limitations,
       comment,
@@ -68,64 +63,58 @@ let productCard
     }) => {
 
       return (
-      <div key ={number} className="row">
-        <div className="col">
-          <p className="text-md-left pl-4"><strong>Достоинства</strong></p>
+        <div key={number} className="row">
+          <div className="col">
+            <p className="text-md-left pl-4"><strong>Достоинства</strong></p>
 
-          <div className="row pl-4">
-            <div className="col">
-            <p className="text-md-left pl-4">{dignity}</p>
+            <div className="row pl-4">
+              <div className="col">
+                <p className="text-md-left pl-4">{dignity}</p>
+              </div>
             </div>
-        </div>
-          <div className="row">
-            <div className="col">
-              <p className="text-md-left pl-4"><strong>Недостатки</strong></p>
-              <div className="row pl-4">
-                <div className="col">
-                  <p className="text-md-left pl-4">{limitations}</p>
+            <div className="row">
+              <div className="col">
+                <p className="text-md-left pl-4"><strong>Недостатки</strong></p>
+                <div className="row pl-4">
+                  <div className="col">
+                    <p className="text-md-left pl-4">{limitations}</p>
+                  </div>
                 </div>
+
               </div>
 
             </div>
-
-          </div>
-          <div className="row">
-            <div className="col">
-              <p className="text-md-left pl-4"><strong>Комментарий</strong></p>
-              <div className="row pl-4">
-                <div className="col">
-                  <p className="text-md-left pl-4">{comment}</p>
+            <div className="row">
+              <div className="col">
+                <p className="text-md-left pl-4"><strong>Комментарий</strong></p>
+                <div className="row pl-4">
+                  <div className="col">
+                    <p className="text-md-left pl-4">{comment}</p>
+                  </div>
                 </div>
+
               </div>
-
             </div>
-
+            <hr></hr>
           </div>
-          <hr></hr>
-
-
         </div>
-
-      </div>
-
       );
-
-    })
+    });
 
     switch (filter) {
-      case "descriptionFool":
-        productCard=descriptionFoolList;
+      case 'descriptionFool':
+        productCard = descriptionFoolList;
         break;
-      case "properties":
-        productCard=propertiesList;
+      case 'properties':
+        productCard = propertiesList;
         break;
-      case "review":
-        productCard=reviewList;
+      case 'review':
+        productCard = reviewList;
         break;
       default:
-        productCard=descriptionFoolList;;
+        productCard = descriptionFoolList;
+        ;
     }
-
 
     const buttons = this.buttons.map(({
       name,
@@ -139,12 +128,9 @@ let productCard
           <div className="col">
             <button type="button" className={`btn  btn-lg btn-block ${clazz}`}
                     onClick={this.onToggleButton.bind(this, name)}> {label}</button>
-
           </div>
         </div>
-
       );
-
     });
 
     return (
@@ -157,7 +143,6 @@ let productCard
           <div className="row">
             {productCard}
           </div>
-
         </div>
       </div>
     );

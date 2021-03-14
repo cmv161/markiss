@@ -4,6 +4,9 @@ import DummyApiService from '../../services/dummy-api-service';
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { shoppingCartPushRedux } from '../../actions';
+import { storage } from '../../utils/utils';
 
 class ItemList extends Component {
 
@@ -19,10 +22,8 @@ class ItemList extends Component {
   dummyApiService = new DummyApiService();
 
   updateProduct() {
-
     this.setState({
       loading: true,
-
     });
     const { category } = this.props;
     const { find } = this.props;
@@ -31,7 +32,7 @@ class ItemList extends Component {
       .getAllData()
       .then((data) => {
         const newData = data.filter(item => {
-          if (find == '') {
+          if (find === '') {
             return item.category === category;
           } else {
             return item.name.toLowerCase()
@@ -40,7 +41,7 @@ class ItemList extends Component {
           }
         });
 
-        let columnLeft = new Set; /*уникальный бренд*/
+        let columnLeft = new Set(); /*уникальный бренд*/
         let priceArrr = [];
         newData.forEach((item) => priceArrr.push(item.price)); /*собираем цену товаров*/
         let min = Math.min.apply(null, priceArrr);
@@ -71,9 +72,8 @@ class ItemList extends Component {
   }
 
   componentDidUpdate(prevProps) {
-
-    if (this.props != prevProps) {
-
+    storage('shoppingCart', this.props.shoppingCart);
+    if (this.props.category !== prevProps.category || this.props.find !== prevProps.find) {
       this.updateProduct();
     }
 
@@ -81,31 +81,44 @@ class ItemList extends Component {
 
   onItemSelected = (key) => {
     const { history } = this.props;
-    console.log(key);
     history.push(`/product/${key}`);
-
   };
 
-  renderItems(arr) {
+  addShoppingCart(event, arrItem, price,) {
+    const { shoppingCartPushRedux } = this.props;
+    shoppingCartPushRedux(arrItem);
+    event.stopPropagation();
+  }
 
-    return arr.map(({
-      name,
-      description,
-      price,
-      key,
-      src
-    }) => {
+  renderItems(arr, shoppingCart = []) {
+
+    return arr.map((item, index) => {
+      const {
+        name,
+        description,
+        price,
+        key,
+        src
+      } = item;
+      let cartButton = 'В корзину';
+      let cartButtonStyle = 'btn btn-primary ';
+
+      if ((shoppingCart.find(itemShopp => itemShopp.key === item.key) && true) || false) {
+        cartButton = 'В корзине';
+        cartButtonStyle = 'btn btn-success';
+      }
 
       return (<div onClick={() => this.onItemSelected(key)} key={key}
-                   className="col-sm-2 imageListSize bg-white m-3  ">
-        <div className="card-body">
+                   className="col-sm-2 imageListSize bg-white m-3 cursorpointer">
+        <div className="card-body ">
           <img height="215px" src={src} className="" alt="..."/>
           <h5 className="card-title">{name}</h5>
           <div className="card"></div>
           {description}
           <div className="card"></div>
           <p className="card-text">{price} Р</p>
-          <a href="#" className="btn btn-primary">В корзину</a>
+          <button onClick={(event) => this.addShoppingCart(event, arr[index], price)}
+                  className={cartButtonStyle}>{cartButton}</button>
         </div>
       </div>);
     });
@@ -169,10 +182,12 @@ class ItemList extends Component {
     } = this.state;
     const searchBrand = data.filter((item) => {
       if (brand.indexOf(item.name) !== -1) return true;
+      return false;
     });
 
     const searchPrice = searchBrand.filter((item) => {
       if (item.price >= priceMin && item.price <= priceMax) return true;
+      return false;
     });
 
     return searchPrice;
@@ -181,13 +196,13 @@ class ItemList extends Component {
 
   brandToggle(item) {
     this.setState((state) => {
-      if (state.brand.indexOf(item) != -1) {
+      if (state.brand.indexOf(item) !== -1) {
         const index = state.brand.indexOf(item);
         state.brand.splice(index, 1);
         return {
           brand: state.brand
         };
-      } else if (state.brand.indexOf(item) == -1) {
+      } else if (state.brand.indexOf(item) === -1) {
         state.brand.push(item);
         return {
           brand: state.brand
@@ -207,6 +222,7 @@ class ItemList extends Component {
   }
 
   render() {
+    const { shoppingCart } = this.props;
     const {
       data,
       loading,
@@ -219,7 +235,7 @@ class ItemList extends Component {
     const errorMessage = error ? <ErrorIndicator/> : null;
 
     const visibleItems = this.brandPriceFilter(data, brand);
-    const items = this.renderItems(visibleItems);
+    const items = this.renderItems(visibleItems, shoppingCart);
     const column = this.renderColumn(visibleBrand);
     const priceFilter = this.renderPrice(visibleItems);
     const content = hasData ? items : null;
@@ -240,6 +256,12 @@ class ItemList extends Component {
   }
 }
 
-export default withRouter(ItemList);
+const mapStateToProps = ({ shoppingCart }) => {
+  return { shoppingCart };
+};
 
+const mapDispathToProps = {
+  shoppingCartPushRedux
+};
 
+export default connect(mapStateToProps, mapDispathToProps)(withRouter(ItemList));

@@ -1,11 +1,10 @@
 
+.searc-button {
 
- .searc-button {
-    
     margin-left: 5px;
- }
+}
 
 
-  .item{
-    cursor: pointer; 
-    }
+.item {
+    cursor: pointer;
+}

@@ -1,20 +1,18 @@
 
+.button {
 
-  .button {
-    
     margin: 10px;
-  }
-
-
-
-.outer {   /*центровка спинера по вертикали и горизонтали */
- text-align: center;
 }
 
-.inner {    /*центровка спинера по вертикали и горизонтали */
-  
-  position: absolute;
-  top: 50%;
-  margin-top: -10%
-  
+
+.outer { /*центровка спинера по вертикали и горизонтали */
+    text-align: center;
+}
+
+.inner { /*центровка спинера по вертикали и горизонтали */
+
+    position: absolute;
+    top: 50%;
+    margin-top: -10%
+
 }

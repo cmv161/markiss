@@ -1,17 +1,16 @@
 
-
-
-    .inner {
-    position: absolute; 
+.inner {
+    position: absolute;
     top: 50%;
     color: tomato;
-    
-  }
-   
-  .outer {
+
+}
+
+.outer {
     display: flex;
     justify-content: center; /*Центрирование по горизонтали*/
-    align-items: center;     /*Центрирование по вертикали */
-    height:100px; width: 100%;
-  }
+    align-items: center; /*Центрирование по вертикали */
+    height: 100px;
+    width: 100%;
+}
 

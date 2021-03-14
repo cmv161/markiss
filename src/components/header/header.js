@@ -4,13 +4,27 @@ import icon from './mark.png';
 
 import './header.css';
 
+import { connect } from 'react-redux';
+
 const Header = ({
   productSwitch,
-  searchProduct
+  searchProduct,
+  shoppingCart
 }) => {
+  const sum = (shoppingCart.map((item) => +item.count)).reduce((a, b) => a + b, 0);
+  const totalItem = shoppingCart.map((item) => +item.total);
+  let totalPrice = (totalItem.reduce((a, b) => a + b, 0)).toLocaleString();
+
+  if (totalPrice !== '0') {
+    totalPrice = totalPrice + ' ₽';
+  } else {
+    totalPrice = null;
+  }
+  const doSomething = function (e) {
+    e.preventDefault();
+  };
 
   return (
-
     <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-white">
       <div className="container">
         <Link to="/" className="navbar-brand">MarKissMarket</Link>
@@ -31,23 +45,24 @@ const Header = ({
               <Link to="/product" id='vitamins'
                     onClick={(event) => productSwitch(event.currentTarget.id)}
                     className="nav-link">Витамины</Link>
-
             </li>
             <li className="nav-item">
               <Link to="/product" id='toilet'
                     onClick={(event) => productSwitch(event.currentTarget.id)}
                     className="nav-link">Наполнитель</Link>
-
             </li>
           </ul>
-          <form action="" className="d-flex">
+          <form action="" className="d-flex" onSubmit={doSomething}>
             <input type="search" placeholder="Поиск" className="form-control mr2"
-                   onChange={(event) => searchProduct(event.target.value)}></input>
-            <button className="btn btn-outline-success searc-button ml-5">Корзина</button>
-
-            <div className="text-nowrap bd-highlight pl-3 pt-1 font-weight-bold">14 799 ₽</div>
-
-
+                   onChange={(event) => searchProduct(event.target.value)
+                   }></input>
+            <Link to="/shoppingcart" className="btn btn-outline-success  ml-5">
+              Корзина
+            </Link>
+            <p className='ml-3 font-weight-bold text-success mr-1'>{sum}</p>
+            <i className="cart-icon fa fa-shopping-cart"></i>
+            <div
+              className="text-nowrap bd-highlight pl-3 pt-1 font-weight-bold text-secondary">{totalPrice}</div>
           </form>
         </div>
       </div>
@@ -55,5 +70,9 @@ const Header = ({
   );
 };
 
-export default Header;
-// <a  id='vitamins' onClick={(event)=>productSwitch(event.currentTarget.id)} className="nav-link ">Витамины</a>
+const mapStateToProps = ({ shoppingCart }) => {
+  return { shoppingCart };
+};
+const mapDispathToProps = {};
+
+export default connect(mapStateToProps, mapDispathToProps)(Header);
