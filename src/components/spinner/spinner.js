@@ -1,27 +1,18 @@
-import React from 'react';
-import './spinner.css';
+import React from "react";
+import { Box, CircularProgress } from "@material-ui/core";
 
 const Spinner = () => {
   return (
-    <div className="outer">
-      <div className="loadingio-spinner-spinner-51qn27m5m8s inner">
-        <div className="ldio-b4kedmhpp7j">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
-    </div>
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="100vh"
+    >
+      <CircularProgress disableShrink/>
+    </Box>
   );
 };
 
 export default Spinner;
+

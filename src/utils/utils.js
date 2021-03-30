@@ -1,7 +1,5 @@
 export const compose = (...funcs) => (comp) => {
-  return funcs.reduceRight(
-    (wrapped, f) => f(wrapped), comp);
-
+  return funcs.reduceRight((wrapped, f) => f(wrapped), comp);
 };
 
 export function storage(key, data = null) {
@@ -10,4 +8,3 @@ export function storage(key, data = null) {
   }
   localStorage.setItem(key, JSON.stringify(data));
 }
-

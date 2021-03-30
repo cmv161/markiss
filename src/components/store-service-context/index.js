@@ -1,6 +1,6 @@
-import {StoreServiceConsumer, StoreServiceProvider} from './store-service-context';
-
-export {
+import {
   StoreServiceConsumer,
-  StoreServiceProvider
-};
+  StoreServiceProvider,
+} from "./store-service-context";
+
+export { StoreServiceConsumer, StoreServiceProvider };

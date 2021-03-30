@@ -1,78 +1,189 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import icon from './mark.png';
+import React, { Component } from "react";
+import { Box, Grid, IconButton } from "@material-ui/core";
+import {
+  AppStyle,
+  InputStyle,
+  StyledBadge,
+  StylesButton,
+  StylesDrawer,
+  StylesLink,
+  TypographyStyle,
+} from "./style";
+import MenuIcon from "@material-ui/icons/Menu";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import icon from "./mark.png";
+import SearchIcon from "@material-ui/icons/Search";
+import MenuList from "./menu-list";
+import { connect } from "react-redux";
+import { authorizationToggleRedux } from "../../actions";
 
-import './header.css';
-
-import { connect } from 'react-redux';
-
-const Header = ({
-  productSwitch,
-  searchProduct,
-  shoppingCart
-}) => {
-  const sum = (shoppingCart.map((item) => +item.count)).reduce((a, b) => a + b, 0);
-  const totalItem = shoppingCart.map((item) => +item.total);
-  let totalPrice = (totalItem.reduce((a, b) => a + b, 0)).toLocaleString();
-
-  if (totalPrice !== '0') {
-    totalPrice = totalPrice + ' ₽';
-  } else {
-    totalPrice = null;
-  }
-  const doSomething = function (e) {
-    e.preventDefault();
+class Header extends Component {
+  state = {
+    drawer: false,
   };
 
-  return (
-    <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-white">
-      <div className="container">
-        <Link to="/" className="navbar-brand">MarKissMarket</Link>
-        <img src={icon} alt="logo" width="40" height="40"/>
-        <button className="navbar-toggler" type="button" data-toggle="collapse"
-                data-target="#navbarContent"
-                aria-controls="navbarContent" aria-expanded="false">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarContent">
-          <ul className="navbar-nav mr-auto mb-2 item">
-            <li className="nav-item ">
-              <Link to="/product" id='feed'
-                    onClick={(event) => productSwitch(event.currentTarget.id)}
-                    className="nav-link">Корма</Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/product" id='vitamins'
-                    onClick={(event) => productSwitch(event.currentTarget.id)}
-                    className="nav-link">Витамины</Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/product" id='toilet'
-                    onClick={(event) => productSwitch(event.currentTarget.id)}
-                    className="nav-link">Наполнитель</Link>
-            </li>
-          </ul>
-          <form action="" className="d-flex" onSubmit={doSomething}>
-            <input type="search" placeholder="Поиск" className="form-control mr2"
-                   onChange={(event) => searchProduct(event.target.value)
-                   }></input>
-            <Link to="/shoppingcart" className="btn btn-outline-success  ml-5">
-              Корзина
-            </Link>
-            <p className='ml-3 font-weight-bold text-success mr-1'>{sum}</p>
-            <i className="cart-icon fa fa-shopping-cart"></i>
-            <div
-              className="text-nowrap bd-highlight pl-3 pt-1 font-weight-bold text-secondary">{totalPrice}</div>
-          </form>
-        </div>
-      </div>
-    </nav>
-  );
-};
+  render() {
+    const {
+      searchProduct,
+      shoppingCart,
+      authorization,
+      authorizationToggleRedux,
+    } = this.props;
 
-const mapStateToProps = ({ shoppingCart }) => {
-  return { shoppingCart };
+    let sum = shoppingCart
+      .map((item) => +item.count)
+      .reduce((a, b) => a + b, 0);
+    const totalItem = shoppingCart.map((item) => +item.total);
+    let totalPrice = totalItem.reduce((a, b) => a + b, 0).toLocaleString();
+
+    if (totalPrice !== "0") {
+      totalPrice = totalPrice + " ₽";
+    } else {
+      totalPrice = "Корзина";
+    }
+
+    if (sum === 0) {
+      sum = null;
+    }
+
+    const toggleDrawer = (open) => () => {
+      this.setState({
+        drawer: open,
+      });
+    };
+    const loginButton = authorization ? "Выход" : "Вход";
+
+    return (
+      <div>
+        <AppStyle position="static">
+          <Grid container>
+            <Grid item xs={8} sm={2} md={3} lg={2}>
+              <Box ml={4} display="flex" alignItems="center">
+                <IconButton
+                  onClick={toggleDrawer(true)}
+                  edge="start"
+                  color="inherit"
+                >
+                  <MenuIcon />
+                </IconButton>
+                <StylesLink to="/">
+                  <TypographyStyle variant="inherit">
+                    MarKissMarket
+                  </TypographyStyle>
+                </StylesLink>
+                <img src={icon} alt="logo" width="40" height="40" />
+              </Box>
+            </Grid>
+            <Grid item xs={2} md={1} sm={1} lg={"auto"}>
+              <Box
+                mt={1}
+                alignItems="flex-end"
+                display={{
+                  xs: "flex",
+                  md: "none",
+                  lg: "none",
+                }}
+              >
+                <StylesLink to="/shoppingcart">
+                  <IconButton aria-label="cart">
+                    <StyledBadge badgeContent={sum} color="primary">
+                      <ShoppingCartIcon />
+                    </StyledBadge>
+                  </IconButton>
+                </StylesLink>
+              </Box>
+            </Grid>
+
+            <Grid item xs={7} sm={4} md={5}>
+              <Box ml={4} display="flex" alignItems="center">
+                <Box mt={2} mr={1} display="flex" alignItems="center">
+                  <SearchIcon />
+                </Box>
+                <InputStyle
+                  label="Я ищу..."
+                  onChange={(event) => searchProduct(event.target.value)}
+                />
+              </Box>
+            </Grid>
+
+            <Grid item xs={1} sm={1} md={1}>
+              <Box
+                justifyContent="flex-end"
+                display={{
+                  xs: "none ",
+                  md: " flex",
+                  lg: " flex",
+                }}
+              >
+                <Box>
+                  <StylesLink to="/shoppingcart">
+                    <IconButton aria-label="cart">
+                      <StyledBadge badgeContent={sum} color="primary">
+                        <ShoppingCartIcon />
+                      </StyledBadge>
+                    </IconButton>
+                  </StylesLink>
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item xs={false} sm={2} md={2} lg={1}>
+              <Box
+                mx={1}
+                mt={1}
+                mr={2}
+                display={{
+                  xs: "none ",
+                  md: " flex",
+                  lg: " flex",
+                }}
+              >
+                <StylesLink to="/shoppingcart">
+                  <StylesButton variant="contained" color="primary">
+                    {totalPrice}
+                  </StylesButton>
+                </StylesLink>
+              </Box>
+            </Grid>
+
+            <Grid item xs={false} sm={2} md={2} lg={1}>
+              <Box
+                mt={1}
+                display={{
+                  xs: "none ",
+                  md: " flex",
+                  lg: " flex",
+                }}
+              >
+                <StylesLink to="/signin">
+                  <StylesButton
+                    onClick={() => authorizationToggleRedux(false)}
+                    variant="contained"
+                    color="primary"
+                  >
+                    {loginButton}
+                  </StylesButton>
+                </StylesLink>
+              </Box>
+            </Grid>
+          </Grid>
+        </AppStyle>
+
+        <StylesDrawer open={this.state.drawer} onClose={toggleDrawer(false)}>
+          <MenuList totalPrice={totalPrice} toggleDrawer={toggleDrawer} />
+        </StylesDrawer>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = ({ shoppingCartReducer, authorizationReducer }) => {
+  return {
+    shoppingCart: shoppingCartReducer.shoppingCart,
+    authorization: authorizationReducer.authorization,
+  };
 };
-const mapDispathToProps = {};
+const mapDispathToProps = {
+  authorizationToggleRedux,
+};
 
 export default connect(mapStateToProps, mapDispathToProps)(Header);

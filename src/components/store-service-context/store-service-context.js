@@ -1,13 +1,10 @@
-import React from 'react';
+import React from "react";
 
 const {
   Provider: StoreServiceProvider,
-  Consumer: StoreServiceConsumer
+  Consumer: StoreServiceConsumer,
 } = React.createContext();
 
-export {
-  StoreServiceConsumer,
-  StoreServiceProvider
-};
+export { StoreServiceConsumer, StoreServiceProvider };
 
 // пробрасывает контекст сквозь компоненты
