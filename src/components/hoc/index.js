@@ -1,6 +1,3 @@
-import withStoreService from './with-store-service';
+import withStoreService from "./with-store-service";
 
-export {
-  withStoreService
-};
-
+export { withStoreService };

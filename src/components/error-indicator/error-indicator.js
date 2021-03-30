@@ -1,16 +1,12 @@
-import React from 'react';
-import './error-indicator.css';
+import React from "react";
+import Box from "@material-ui/core/Box";
 
 const ErrorIndicator = () => {
-
   return (
-    <div className="outer">
-      <h2 className="inner">
-        ALARM ERROR
-      </h2>
-    </div>
+    <Box display="flex" justifyContent="center" alignItems="center">
+      <h2>ALARM ERROR</h2>
+    </Box>
   );
-
 };
 
 export default ErrorIndicator;

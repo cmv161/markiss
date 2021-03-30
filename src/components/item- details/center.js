@@ -1,19 +1,21 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { shoppingCartPushRedux } from '../../actions';
-import { storage } from '../../utils/utils';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { shoppingCartPushRedux } from "../../actions";
+import { storage } from "../../utils/utils";
+import { Box, Grid } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import { ImgStyle } from "./style";
 
 class Center extends Component {
   state = {
-    image: this.props.src
+    image: this.props.src,
   };
 
   onToggleImage = (name) => {
-    console.log(name);
     this.setState({
-      image: name
+      image: name,
     });
-
   };
 
   render() {
@@ -25,61 +27,88 @@ class Center extends Component {
       arr,
       keyItem,
       shoppingCartPushRedux,
-      shoppingCart
+      shoppingCart,
     } = this.props;
-    storage('shoppingCart', shoppingCart);
+    storage("shoppingCart", shoppingCart);
     const { image } = this.state;
 
     const addShoppingCart = () => {
       shoppingCartPushRedux(arr[0]);
     };
 
-    let cartButton = 'В корзину';
-    let cartButtonStyle = 'btn btn-primary  mt-4  btn-lg';
+    let cartButton = "В корзину";
+    let cartButtonStyle = "primary";
 
-    if ((shoppingCart.find(itemShopp => itemShopp.key === keyItem) && true) || false) {
-
-      cartButton = 'В корзине';
-      cartButtonStyle = 'btn btn-success  mt-4  btn-lg';
+    if (
+      (shoppingCart.find((itemShopp) => itemShopp.key === keyItem) && true) ||
+      false
+    ) {
+      cartButton = "В корзине";
+      cartButtonStyle = "default";
     }
 
     return (
-      <div className="row  bg-white p-4 rounded">
-        <div className="col-md-1">
-          <img onClick={this.onToggleImage.bind(this, src)} height="80px"
-               src={src}
-               className=" rounded " alt="..."></img>
-          <img onClick={this.onToggleImage.bind(this, src2)} height="80px"
-               src={src2}
-               className=" rounded mt-2" alt="..."></img>
-          <img onClick={this.onToggleImage.bind(this, src3)} height="80px"
-               src={src3}
-               className=" rounded mt-2" alt="..."></img>
-        </div>
-        <div className="col-md-3">
-          <img height="245px"
-               src={image}
-               className="rounded" alt="..."></img>
-        </div>
-        <div className="col-md-3 offset-md-1 p-4">
-          <h3 className="p-3">{price} ₽</h3>
-          <button onClick={() => addShoppingCart()} type="button"
-                  className={cartButtonStyle}>{cartButton}
-          </button>
-        </div>
-      </div>
+      <React.Fragment>
+        <Box ml={4} mr={2} mt={2}>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+            item
+            xs={2}
+            sm={2}
+            md={1}
+          >
+            <ImgStyle
+              onClick={this.onToggleImage.bind(this, src)}
+              height="80px"
+              src={src}
+              alt="..."
+            ></ImgStyle>
+
+            <ImgStyle
+              onClick={this.onToggleImage.bind(this, src2)}
+              height="80px"
+              src={src2}
+              alt="..."
+            ></ImgStyle>
+            <ImgStyle
+              onClick={this.onToggleImage.bind(this, src3)}
+              height="80px"
+              src={src3}
+              alt="..."
+            ></ImgStyle>
+          </Grid>
+        </Box>
+        <Grid item xs={6} sm={6} md={2}>
+          <img height="245px" src={image} className="rounded" alt="..."></img>
+        </Grid>
+        <Grid item xs={12} sm={12} md={3}>
+          <Box ml={2}>
+            <Typography variant="h5">{price} ₽</Typography>
+            <Button
+              variant="contained"
+              color={cartButtonStyle}
+              onClick={() => addShoppingCart()}
+            >
+              {cartButton}
+            </Button>
+          </Box>
+        </Grid>
+      </React.Fragment>
     );
   }
+}
 
+const mapStateToProps = ({ shoppingCartReducer }) => {
+  return {
+    shoppingCart: shoppingCartReducer.shoppingCart,
+  };
 };
 
-const mapStateToProps = ({ shoppingCart }) => {
-  return { shoppingCart };
-};
 const mapDispathToProps = {
-  shoppingCartPushRedux
+  shoppingCartPushRedux,
 };
 
 export default connect(mapStateToProps, mapDispathToProps)(Center);
-
-

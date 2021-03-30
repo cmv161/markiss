@@ -1,7 +1,5 @@
 export default class StoreService {
   getItem() {
-    return [
-      { test: 'test' }
-    ];
+    return [{ test: "test" }];
   }
 }

@@ -1,119 +1,127 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { Grid } from "@material-ui/core";
+import { ButtonFooterStyle } from "./style";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
 
 export default class Footer extends Component {
-
   state = {
-    filter: 'descriptionFool'
+    filter: "descriptionFool",
   };
   buttons = [
     {
-      name: 'descriptionFool',
-      label: 'Описание'
+      name: "descriptionFool",
+      label: "Описание",
     },
     {
-      name: 'properties',
-      label: 'Характеристики'
+      name: "properties",
+      label: "Характеристики",
     },
     {
-      name: 'review',
-      label: 'Отзывы'
-    }
+      name: "review",
+      label: "Отзывы",
+    },
   ];
   onToggleButton = (name) => {
     this.setState({
-      filter: name
+      filter: name,
     });
-
   };
 
   render() {
-
     let productCard;
     const { filter } = this.state;
     const {
-      name,
       descriptionFool,
       properties,
       review
     } = this.props;
-
     const propertiesList = (
-      <React.Fragment>
-        <div className="col-md-3">
-          <p className="text-md-left pl-4">Тип</p>
-          <p className="text-md-left pl-4">Для кого</p>
-          <p className="text-md-left pl-4">Вкус</p>
-        </div>
-        <div className="col-md-3">
-          <p className="text-md-left">{properties.type}</p>
-          <p className="text-md-left">{properties.designedFor}</p>
-          <p className="text-md-left">{properties.taste}</p>
-        </div>
-      </React.Fragment>
+      <Grid container direction="row">
+        <Grid item xs={5} sm={2} md={2}>
+          <Box
+            fontSize="h6.fontSize"
+            textAlign="left"
+            fontWeight="fontWeightBold"
+          >
+            Тип
+          </Box>
+          <Box
+            my={2}
+            fontSize="h6.fontSize"
+            textAlign="left"
+            fontWeight="fontWeightBold"
+          >
+            Для кого
+          </Box>
+          <Box
+            fontSize="h6.fontSize"
+            textAlign="left"
+            fontWeight="fontWeightBold"
+          >
+            Вкус
+          </Box>
+        </Grid>
+        <Grid item xs={5} sm={2} md={2}>
+          <Box fontSize="h6.fontSize" textAlign="left">
+            {properties.type}
+          </Box>
+          <Box my={2} fontSize="h6.fontSize" textAlign="left">
+            {properties.designedFor}
+          </Box>
+          <Box fontSize="h6.fontSize" textAlign="left">
+            {properties.taste}
+          </Box>
+        </Grid>
+      </Grid>
     );
     const descriptionFoolList = (
-      <p className="text-md-left p-4"> {descriptionFool}</p>
+      <Grid item>
+        <Typography align="justify" style={{ textIndent: 30 }}>
+          {descriptionFool}
+        </Typography>
+      </Grid>
     );
 
-    const reviewList = review.map(({
-      dignity,
-      limitations,
-      comment,
-      number
-    }) => {
-
-      return (
-        <div key={number} className="row">
-          <div className="col">
-            <p className="text-md-left pl-4"><strong>Достоинства</strong></p>
-
-            <div className="row pl-4">
-              <div className="col">
-                <p className="text-md-left pl-4">{dignity}</p>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col">
-                <p className="text-md-left pl-4"><strong>Недостатки</strong></p>
-                <div className="row pl-4">
-                  <div className="col">
-                    <p className="text-md-left pl-4">{limitations}</p>
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
-            <div className="row">
-              <div className="col">
-                <p className="text-md-left pl-4"><strong>Комментарий</strong></p>
-                <div className="row pl-4">
-                  <div className="col">
-                    <p className="text-md-left pl-4">{comment}</p>
-                  </div>
-                </div>
-
-              </div>
-            </div>
+    const reviewList = review.map(
+      ({
+        dignity,
+        limitations,
+        comment,
+        number
+      }) => {
+        return (
+          <Grid item key={number}>
+            <Box fontSize="h6.fontSize" textAlign="left">
+              Достоинства
+            </Box>
+            <p>{dignity}</p>
+            <Box fontSize="h6.fontSize" textAlign="left">
+              Недостатки
+            </Box>
+            <p>{limitations}</p>
+            <Box fontSize="h6.fontSize" textAlign="left">
+              Комментарий
+            </Box>
+            <p>{comment}</p>
             <hr></hr>
-          </div>
-        </div>
-      );
-    });
+          </Grid>
+        );
+      }
+    );
 
     switch (filter) {
-      case 'descriptionFool':
+      case "descriptionFool":
         productCard = descriptionFoolList;
         break;
-      case 'properties':
+      case "properties":
         productCard = propertiesList;
         break;
-      case 'review':
+      case "review":
         productCard = reviewList;
         break;
       default:
         productCard = descriptionFoolList;
-        ;
     }
 
     const buttons = this.buttons.map(({
@@ -121,33 +129,40 @@ export default class Footer extends Component {
       label
     }) => {
       const isActive = filter === name;
-      const clazz = isActive ? 'btn-primary' : 'btn-secondary';
+      const clazz = isActive ? "primary" : "default";
 
       return (
-        <div key={name} className="row mt-3">
-          <div className="col">
-            <button type="button" className={`btn  btn-lg btn-block ${clazz}`}
-                    onClick={this.onToggleButton.bind(this, name)}> {label}</button>
-          </div>
-        </div>
+        <Grid key={label} item xs={12} sm={2} md={2} style={{ margin: "10px" }}>
+          <ButtonFooterStyle
+            variant="contained"
+            color={clazz}
+            onClick={this.onToggleButton.bind(this, name)}
+          >
+            {label}
+          </ButtonFooterStyle>
+        </Grid>
       );
     });
 
     return (
-      <div className="row  bg-white mt-5 rounded">
-        <div className="col-md-3 my-2">
-          {buttons}
-        </div>
-        <div className="col-md-8 p-4">
-          <h3 className=" pl-4">{name}</h3>
-          <div className="row">
-            {productCard}
-          </div>
-        </div>
-      </div>
+      <Grid item xs={12} sm={12} md={12}>
+        <hr/>
+        <Grid container>{buttons}</Grid>
+        <Grid
+          // container
+          item
+          xs={10}
+          sm={6}
+          md={6}
+          style={{
+            marginBottom: "45px",
+            marginTop: "10px",
+            marginLeft: "20px",
+          }}
+        >
+          {productCard}
+        </Grid>
+      </Grid>
     );
   }
 }
-
-
-
