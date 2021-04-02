@@ -1,0 +1,65 @@
+.filter {
+    margin-left: 10px;
+    position: absolute;
+}
+
+@keyframes show-filter {
+    0% {
+        opacity: 0;
+        transform: translateX(+400px)
+    }
+
+    50% {
+        opacity: 1;
+
+    }
+
+    100% {
+        transform: translateX(0)
+    }
+
+}
+
+
+.filter.entering {
+    animation: show-filter .5s forwards;
+
+}
+
+.filter.exiting {
+    animation: show-filter .5s reverse;
+}
+
+
+.content {
+    margin-left: 10px;
+}
+
+@keyframes show-content {
+    0% {
+        opacity: 0;
+        transform: translateX(-400px)
+    }
+
+    50% {
+
+
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+}
+
+
+.content.entering {
+    animation: show-content .7s forwards;
+
+}
+
+.content.exiting {
+    animation: show-content .7s reverse;
+}
+

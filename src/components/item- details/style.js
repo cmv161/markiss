@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Box, Button, Grid } from "@material-ui/core";
+import {Box, Button, Grid} from "@material-ui/core";
 
 const GridStyle = styled(Grid)`
   background-color: white;
@@ -18,4 +18,9 @@ const ImgStyle = styled.img`
   cursor: pointer;
 `;
 
-export { ButtonFooterStyle, GridStyle, BoxStyle, ImgStyle };
+const GridFilterStyle = styled(Grid)`
+ margin-top: 10px;
+ padding-right: 5px;
+`;
+
+export {GridFilterStyle, ButtonFooterStyle, GridStyle, BoxStyle, ImgStyle};
