@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { shoppingCartPushRedux } from "../../actions";
 import { storage } from "../../utils/utils";
 import { BoxStyle } from "./style";
+import "./style.css";
 import {
   Box,
   Container,
@@ -20,6 +21,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import renderItems from "./render-Items";
 import renderColumnLeft from "./render-column-left";
 import Pagination from "@material-ui/lab/Pagination";
+import { Transition } from "react-transition-group";
 
 class ItemList extends Component {
   state = {
@@ -30,7 +32,7 @@ class ItemList extends Component {
     visibleBrand: [],
     priceMin: "",
     priceMax: "",
-    anchorEl: null,
+    filter: false,
     page: 1,
     totalAmountItem: null,
     paginationAmount: 4,
@@ -156,15 +158,12 @@ class ItemList extends Component {
     );
   }
 
-  handleClick = (event) => {
-    this.setState({
-      anchorEl: event.currentTarget,
-    });
-  };
-
-  handleClose = () => {
-    this.setState({
-      anchorEl: null,
+  filterToggle = (event) => {
+    console.log("ggggg");
+    this.setState((state) => {
+      return {
+        filter: !state.filter,
+      };
     });
   };
 
@@ -175,7 +174,7 @@ class ItemList extends Component {
           key={item}
           control={
             <Checkbox
-              defaultChecked={true}
+              checked={this.state.brand.includes(item)}
               onChange={() => this.brandToggle(item)}
               color="primary"
             />
@@ -264,7 +263,7 @@ class ItemList extends Component {
 
   render() {
     const { shoppingCart } = this.props;
-    const { data, loading, error, brand, visibleBrand, anchorEl } = this.state;
+    const { data, loading, error, brand, visibleBrand, filter } = this.state;
     const hasData = !(loading || error);
     const spinner = loading ? <Spinner /> : null;
     const errorMessage = error ? <ErrorIndicator /> : null;
@@ -281,33 +280,37 @@ class ItemList extends Component {
     const pagination = this.paginationControlled();
     const columnLeft = loading
       ? null
-      : renderColumnLeft(
-          column,
-          priceFilter,
-          anchorEl,
-          this.handleClick,
-          this.handleClose
-        );
+      : renderColumnLeft(column, priceFilter, filter, this.filterToggle);
+    let width = window.innerWidth;
 
     return (
       <div>
-        {/*{columnLeft}*/}
+        {columnLeft}
         <div>
-          <Grid item xs={12} sm={6} md={3} lg={3}>
-            {columnLeft}
-          </Grid>
           {errorMessage}
           <Box mt={6}>
             <Container>
               <Grid container spacing={4}>
-                {content}
+                {width < 425 && (
+                  <Transition
+                    in={!filter}
+                    timeout={450}
+                    mountOnEnter
+                    unmountOnExit
+                  >
+                    {(state) => (
+                      <div className={`content ${state}`}>{content}</div>
+                    )}
+                  </Transition>
+                )}
+                {width > 425 && content}
               </Grid>
             </Container>
             {spinner}
           </Box>
         </div>
         <Box mt={6} display="flex" justifyContent="center">
-          {pagination}
+          {!filter && pagination}
         </Box>
       </div>
     );

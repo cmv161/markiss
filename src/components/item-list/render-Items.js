@@ -8,13 +8,13 @@ import {
 } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 
-import { CardMediaStyle, CardStyle } from "./style";
+import {CardMediaStyle, CardStyle} from "./style";
 
 const renderItems = (
   arr,
   shoppingCart = [],
   onItemSelected,
-  addShoppingCart
+  addShoppingCart,
 ) => {
   return arr.map((item, index) => {
     const {
@@ -47,7 +47,7 @@ const renderItems = (
       >
         <CardStyle>
           <Box m={1} mt={2}>
-            <CardMediaStyle style={{ backgroundSize: "contain" }} image={src}/>
+            <CardMediaStyle style={{backgroundSize: "contain"}} image={src}/>
           </Box>
           <CardContent>
             <Typography align="center" variant="h6" gutterBottom>
@@ -57,7 +57,7 @@ const renderItems = (
             <Typography align="center">{description}</Typography>
           </CardContent>
 
-          <CardActions style={{ justifyContent: "center" }}>
+          <CardActions style={{justifyContent: "center"}}>
             <Button
               onClick={(event) => addShoppingCart(event, arr[index], price)}
               variant="contained"

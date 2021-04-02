@@ -2,18 +2,14 @@ import React from "react";
 import { Box } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import { GridFilterStyle } from "../item- details/style";
+import SwapVertIcon from "@material-ui/icons/SwapVert";
+import { Transition } from "react-transition-group";
+import "./style.css";
 
-const renderColumnLeft = (
-  column,
-  priceFilter,
-  anchorEl,
-  handleClick,
-  handleClose
-) => {
+const renderColumnLeft = (column, priceFilter, filter, filterToggle) => {
   let width = window.innerWidth;
   if (width > 425) {
     return (
@@ -33,51 +29,36 @@ const renderColumnLeft = (
     );
   } else {
     return (
-      <Box
-        ml={4}
-        style={{
-          float: "left",
-          width: "300px",
-        }}
-      >
-        <div>
-          <FormControlLabel
-            control={
-              <Switch
-                defaultChecked={false}
-                onChange={handleClick}
-                color="primary"
-              />
-            }
-            label="Фильтр"
-          />
-          <Menu
-            elevation={0}
-            getContentAnchorEl={null}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "center",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "center",
-            }}
-            anchorEl={anchorEl}
-            // keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem>
-              <FormControl component="fieldset">
-                <FormLabel component="legend">Производитель</FormLabel>
+      <React.Fragment>
+        <GridFilterStyle
+          container
+          direction="row"
+          justify="flex-end"
+          alignItems="flex-start"
+        >
+          <Grid item onClick={filterToggle}>
+            <Typography align="right">Фильтры</Typography>
+          </Grid>
+          <Grid item>
+            <SwapVertIcon />
+          </Grid>
+        </GridFilterStyle>
+        <hr />
 
-                {column}
-                {priceFilter}
-              </FormControl>
-            </MenuItem>
-          </Menu>
-        </div>
-      </Box>
+        <Transition
+          in={filter}
+          timeout={300}
+          // mountOnEnter
+          unmountOnExit
+        >
+          {(state) => (
+            <div className={`filter ${state}`}>
+              {column}
+              {priceFilter}
+            </div>
+          )}
+        </Transition>
+      </React.Fragment>
     );
   }
 };
